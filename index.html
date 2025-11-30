@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>正版小说推荐</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .book-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .book-card:hover {
+      transform: translateY(-4px);
+    }
+    .book-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .book-info {
+      padding: 12px;
+    }
+    .book-title {
+      font-weight: bold;
+      font-size: 15px;
+      color: #222;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 38px;
+    }
+    .book-author {
+      font-size: 13px;
+      color: #777;
+      margin-top: 6px;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📚 正版小说推荐</h1>
+    <p class="subtitle">点击封面跳转至官方正版阅读页</p>
+  </header>
+
+  <div class="book-grid" id="bookList"></div>
+
+  <script>
+    // ✅ 在这里填写你的书籍数据
+    const books = [
+      {
+        title: "我不是戏神",
+        author: "三九音域",
+        cover: "https://i.ibb.co/cc6Rdh3n/image.png",
+        url: "https://fanqienovel.com/page/7276384138653862966"
+      },
+      {
+        title: "大奉打更人",
+        author: "卖报小郎君",
+        cover: "https://i.ibb.co/LXBDhphL/image.png",
+        url: "http://www.bqgt.cc/book/75393/"
+      },
+      {
+        title: "蛊真人",
+        author: "蛊真人",
+        cover: "https://i.ibb.co/GQwyH6nw/image.png",
+        url: "http://www.bqgt.cc/book/112943/"
+      },
+      {
+        title: "深空彼岸",
+        author: "辰东",
+        cover: "https://i.ibb.co/SwrdHjFL/image.png",
+        url: "http://www.bqgt.cc/book/102456/"
+      },
+{
+        title: "这些仙子都不正常！",
+        author: "叁司",
+        cover: "",
+        url: "https://www.qidian.com/book/1034915599/"
+      },
+{
+        title: "穿越成女生后的若干事",
+        author: "言下有语",
+        cover: "",
+        url: "https://www.qidian.com/book/1017803587/"
+      },
+{
+        title: "适者生存",
+        author: "伯百川",
+        cover: "",
+        url: "https://www.qidian.com/book/1044987141/"
+      },
+{
+        title: "妹纸，我真是正人君子！",
+        author: "白糖砂橘",
+        cover: "",
+        url: "https://www.qidian.com/book/1026808478/"
+      },
+{
+        title: "重生后，贵妃被宠上了天",
+        author: "红心糖",
+        cover: "",
+        url: "https://www.qidian.com/book/1031428941/"
+      },
+{
+        title: "穿越之嫡女天下",
+        author: "淡红指尖",
+        cover: "",
+        url: "https://www.qidian.com/book/2980066/"
+      },
+{
+        title: "反派大师兄，师妹们全是病娇！",
+        author: "就爱吃话梅",
+        cover: "",
+        url: "https://www.zhuishu.com/id52164/"
+      },
+{
+        title: "救命，小师妹把剧情带崩了",
+        author: "小睡神嗷呜",
+        cover: "",
+        url: "https://fanqienovel.com/page/7556434967991962649?enter_from=search"
+      },
+{
+        title: "师妹，师妹，想不想跟师兄修修修",
+        author: "卿慕白",
+        cover: "",
+        url: "https://fanqienovel.com/page/7535007207671204889?enter_from=search"
+      },
+{
+        title: "我在精神病院学斩神",
+        author: "三九音域",
+        cover: "",
+        url: "https://fanqienovel.com/page/6982529841564224526?enter_from=search"
+      },
+      {
+        title: "夜的命名术",
+        author: "会说话的肘子",
+        cover: "https://i.ibb.co/VWLc19Cc/image.png",
+        url: "http://www.bqgt.cc/book/59989/"
+      }
+    ];
+
+    // 渲染书籍卡片
+    const container = document.getElementById('bookList');
+    books.forEach(book => {
+      const card = document.createElement('div');
+      card.className = 'book-card';
+      card.innerHTML = `
+        <a href="${book.url}" target="_blank" rel="noopener noreferrer">
+          <img src="${book.cover}" alt="${book.title}" onerror="this.src='https://via.placeholder.com/120x160.png?text=封面'">
+          <div class="book-info">
+            <div class="book-title">${book.title}</div>
+            <div class="book-author">by ${book.author}</div>
+          </div>
+        </a>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
