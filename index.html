@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>正版漫画推荐</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+    .comic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .comic-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .comic-card:hover {
+      transform: translateY(-4px);
+    }
+    .comic-card img {
+      width: 100%;
+      height: 160px; /* 调整为更适合漫画竖版封面的比例 */
+      object-fit: cover;
+      display: block;
+    }
+    .comic-info {
+      padding: 12px;
+    }
+    .comic-title {
+      font-weight: bold;
+      font-size: 15px;
+      color: #222;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 38px;
+    }
+    .comic-author {
+      font-size: 13px;
+      color: #777;
+      margin-top: 6px;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📖 正版漫画推荐</h1>
+    <p class="subtitle">点击封面跳转至官方正版阅读页</p>
+  </header>
+
+  <div class="comic-grid" id="comicList"></div>
+
+  <script>
+    // 漫画数据
+    const comics = [
+      {
+        "title": "海贼王",
+        "author": "尾田荣一郎",
+        "cover": "https://picsum.photos/seed/onepiece/300/400", 
+        "officialUrl": "https://ac.qq.com/Comic/comicInfo/id/505430", 
+      },
+      {
+        "title": "火影忍者",
+        "author": "岸本齐史",
+        "cover": "https://picsum.photos/seed/naruto/300/400",
+        "officialUrl": "https://ac.qq.com/Comic/comicInfo/id/505432",
+      },
+      {
+        "title": "鬼灭之刃",
+        "author": "吾峠呼世晴",
+        "cover": "https://picsum.photos/seed/demon/300/400",
+        "officialUrl": "https://ac.qq.com/Comic/comicInfo/id/645248",
+      },
+      {
+        "title": "斗破苍穹",
+        "author": "天蚕土豆",
+        "cover": "https://picsum.photos/seed/jujutsu/300/400",
+        "officialUrl": "https://ac.qq.com/Comic/comicInfo/id/531040",
+      }
+    ];
+
+    // 渲染漫画卡片
+    const container = document.getElementById('comicList');
+    comics.forEach(comic => {
+      const card = document.createElement('div');
+      card.className = 'comic-card';
+      card.innerHTML = `
+        <a href="${comic.officialUrl}" target="_blank" rel="noopener noreferrer">
+          <img src="${comic.cover}" alt="${comic.title}" onerror="this.src='https://via.placeholder.com/100x140.png?text=漫画封面'">
+          <div class="comic-info">
+            <div class="comic-title">${comic.title}</div>
+            <div class="comic-author">${comic.author}</div>
+          </div>
+        </a>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
